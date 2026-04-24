@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
 using namespace std;
 
 // ===================== STRUCT =====================
@@ -207,7 +206,9 @@ void soSanhBaoHanh(const HangDienTu& a, const HangDienTu& b) {
 
 // ===================== MAIN =====================
 int main() {
-    vector<SanPham*> danhSach;
+    const int MAX = 100;
+    SanPham* danhSach[MAX];
+    int soLuongSP = 0;
     int luaChon;
 
     do {
@@ -220,35 +221,37 @@ int main() {
         cout << "Chon: "; cin >> luaChon;
 
         if (luaChon == 1) {
+            if (soLuongSP >= MAX) { cout << "[!] Danh sach day!\n"; continue; }
             HangThucPham* sp = new HangThucPham();
             cout << "\n-- Nhap thong tin Hang Thuc Pham --\n";
             sp->nhapThongTin();
-            danhSach.push_back(sp);
+            danhSach[soLuongSP++] = sp;
             cout << "[+] Da them san pham!\n";
 
         } else if (luaChon == 2) {
+            if (soLuongSP >= MAX) { cout << "[!] Danh sach day!\n"; continue; }
             HangDienTu* sp = new HangDienTu();
             cout << "\n-- Nhap thong tin Hang Dien Tu --\n";
             sp->nhapThongTin();
-            danhSach.push_back(sp);
+            danhSach[soLuongSP++] = sp;
             cout << "[+] Da them san pham!\n";
 
         } else if (luaChon == 3) {
-            if (danhSach.empty()) { cout << "(Chua co san pham)\n"; continue; }
+            if (soLuongSP == 0) { cout << "(Chua co san pham)\n"; continue; }
             cout << "\n========== DANH SACH ==========\n";
-            for (auto sp : danhSach) {
-                sp->xuatThongTin();
-                cout << "  Tong tien: " << sp->tinhTongTien() << " VND\n\n";
+            for (int i = 0; i < soLuongSP; i++) {
+                danhSach[i]->xuatThongTin();
+                cout << "  Tong tien: " << danhSach[i]->tinhTongTien() << " VND\n\n";
             }
 
         } else if (luaChon == 4) {
             double tong = 0;
-            for (auto sp : danhSach) tong += sp->tinhTongTien();
+            for (int i = 0; i < soLuongSP; i++) tong += danhSach[i]->tinhTongTien();
             cout << "\nTong tien toan kho: " << tong << " VND\n";
         }
 
     } while (luaChon != 0);
 
-    for (auto sp : danhSach) delete sp;
+    for (int i = 0; i < soLuongSP; i++) delete danhSach[i];
     return 0;
 }
