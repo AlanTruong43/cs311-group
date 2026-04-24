@@ -16,6 +16,7 @@ protected:
     int        maSanPham;
     double     gia;
     int        soLuong;
+    string     loaiSP;        // them du theo so do lop
     string     thuongHieu;
     string     nuocSanXuat;
     NhaCungCap nhaCungCap;
@@ -25,9 +26,9 @@ public:
     SanPham()
         : maSanPham(0), gia(0.0), soLuong(0) {}
 
-    SanPham(string ten, int ma, double g, int sl,
+    SanPham(string ten, int ma, double g, int sl, string loai,
             string thuong, string nuoc, NhaCungCap ncc)
-        : tenSanPham(ten), maSanPham(ma), gia(g), soLuong(sl),
+        : tenSanPham(ten), maSanPham(ma), gia(g), soLuong(sl), loaiSP(loai),
           thuongHieu(thuong), nuocSanXuat(nuoc), nhaCungCap(ncc) {}
 
     virtual ~SanPham() {}
@@ -37,6 +38,7 @@ public:
     int        getMaSanPham()   const { return maSanPham; }
     double     getGia()         const { return gia; }
     int        getSoLuong()     const { return soLuong; }
+    string     getLoaiSP()      const { return loaiSP; }
     string     getThuongHieu()  const { return thuongHieu; }
     string     getNuocSanXuat() const { return nuocSanXuat; }
     NhaCungCap getNhaCungCap()  const { return nhaCungCap; }
@@ -46,6 +48,7 @@ public:
     void setMaSanPham(int ma)         { maSanPham = ma; }
     void setGia(double g)             { if (g >= 0) gia = g; }
     void setSoLuong(int sl)           { if (sl >= 0) soLuong = sl; }
+    void setLoaiSP(string loai)       { loaiSP = loai; }
     void setThuongHieu(string t)      { thuongHieu = t; }
     void setNuocSanXuat(string n)     { nuocSanXuat = n; }
     void setNhaCungCap(NhaCungCap n)  { nhaCungCap = n; }
@@ -59,6 +62,7 @@ public:
         cout << "  Gia          : "; cin >> gia;
         cout << "  So luong     : "; cin >> soLuong;
         cin.ignore();
+        cout << "  Loai SP      : "; getline(cin, loaiSP);
         cout << "  Thuong hieu  : "; getline(cin, thuongHieu);
         cout << "  Nuoc san xuat: "; getline(cin, nuocSanXuat);
         cout << "  Ten NCC      : "; getline(cin, nhaCungCap.ten);
@@ -70,6 +74,7 @@ public:
         cout << "  Ten SP       : " << tenSanPham        << "\n";
         cout << "  Gia          : " << gia               << " VND\n";
         cout << "  So luong     : " << soLuong           << "\n";
+        cout << "  Loai SP      : " << loaiSP            << "\n";
         cout << "  Thuong hieu  : " << thuongHieu        << "\n";
         cout << "  Nuoc SX      : " << nuocSanXuat       << "\n";
         cout << "  Nha CC       : " << nhaCungCap.ten    << "\n";
@@ -100,10 +105,10 @@ public:
     HangThucPham()
         : SanPham(), nhietDoLuuTru(0.0) {}
 
-    HangThucPham(string ten, int ma, double g, int sl,
+    HangThucPham(string ten, int ma, double g, int sl, string loaiSP,
                  string thuong, string nuoc, NhaCungCap ncc,
                  string hanSD, string loai, double nhiet)
-        : SanPham(ten, ma, g, sl, thuong, nuoc, ncc),
+        : SanPham(ten, ma, g, sl, loaiSP, thuong, nuoc, ncc),
           hanSuDung(hanSD), loaiThucPham(loai), nhietDoLuuTru(nhiet) {}
 
     // ---------- 5 Chuc Nang ----------
@@ -151,10 +156,10 @@ public:
     HangDienTu()
         : SanPham(), baoHanh(0), congSuat(0.0) {}
 
-    HangDienTu(string ten, int ma, double g, int sl,
+    HangDienTu(string ten, int ma, double g, int sl, string loaiSP,
                string thuong, string nuoc, NhaCungCap ncc,
                int bh, double cs, string pv, string ms)
-        : SanPham(ten, ma, g, sl, thuong, nuoc, ncc),
+        : SanPham(ten, ma, g, sl, loaiSP, thuong, nuoc, ncc),
           baoHanh(bh), congSuat(cs), phienBan(pv), mauSac(ms) {}
 
     // ---------- 5 Chuc Nang ----------
@@ -214,19 +219,19 @@ int main() {
     NhaCungCap ncc1 = {"Cong ty Thuc Pham Sach", "Ha Noi",    "0901234567"};
     NhaCungCap ncc2 = {"Cong ty Samsung VN",     "Binh Duong","0912345678"};
 
-    HangThucPham tp1("Sua TH True Milk", 201, 35000, 100,
+    HangThucPham tp1("Sua TH True Milk", 201, 35000, 100, "Thuc pham",
                      "TH", "Viet Nam", ncc1,
                      "2025-12-01", "Dong lanh", 4.0);
 
-    HangThucPham tp2("Banh Oreo", 202, 25000, 200,
+    HangThucPham tp2("Banh Oreo", 202, 25000, 200, "Thuc pham",
                      "Oreo", "USA", ncc1,
                      "2025-08-15", "Kho", 25.0);
 
-    HangDienTu dt1("Samsung Galaxy S24", 301, 22000000, 10,
+    HangDienTu dt1("Samsung Galaxy S24", 301, 22000000, 10, "Dien tu",
                    "Samsung", "Han Quoc", ncc2,
                    24, 25.0, "S24-5G", "Den");
 
-    HangDienTu dt2("Laptop Asus Zenbook", 302, 18500000, 5,
+    HangDienTu dt2("Laptop Asus Zenbook", 302, 18500000, 5, "Dien tu",
                    "Asus", "Dai Loan", ncc2,
                    12, 65.0, "2024-i7", "Xam");
 
