@@ -16,6 +16,7 @@ protected:
     int    maSanPham;
     double gia;
     int    soLuong;
+    string loaiSP;
     string thuongHieu;
     string nuocSanXuat;
     NhaCungCap nhaCungCap;
@@ -25,9 +26,9 @@ public:
     SanPham()
         : maSanPham(0), gia(0.0), soLuong(0) {}
 
-    SanPham(string ten, int ma, double g, int sl,
+    SanPham(string ten, int ma, double g, int sl, string loai,
             string thuong, string nuoc, NhaCungCap ncc)
-        : tenSanPham(ten), maSanPham(ma), gia(g), soLuong(sl),
+        : tenSanPham(ten), maSanPham(ma), gia(g), soLuong(sl), loaiSP(loai),
           thuongHieu(thuong), nuocSanXuat(nuoc), nhaCungCap(ncc) {}
 
     virtual ~SanPham() {}
@@ -37,6 +38,7 @@ public:
     int        getMaSanPham()   const { return maSanPham; }
     double     getGia()         const { return gia; }
     int        getSoLuong()     const { return soLuong; }
+    string     getLoaiSP()      const { return loaiSP; }
     string     getThuongHieu()  const { return thuongHieu; }
     string     getNuocSanXuat() const { return nuocSanXuat; }
     NhaCungCap getNhaCungCap()  const { return nhaCungCap; }
@@ -46,6 +48,7 @@ public:
     void setMaSanPham(int ma)        { maSanPham = ma; }
     void setGia(double g)            { if (g >= 0) gia = g; }
     void setSoLuong(int sl)          { if (sl >= 0) soLuong = sl; }
+    void setLoaiSP(string loai)      { loaiSP = loai; }
     void setThuongHieu(string t)     { thuongHieu = t; }
     void setNuocSanXuat(string n)    { nuocSanXuat = n; }
     void setNhaCungCap(NhaCungCap n) { nhaCungCap = n; }
@@ -58,6 +61,7 @@ public:
         cout << "  Gia          : "; cin >> gia;
         cout << "  So luong     : "; cin >> soLuong;
         cin.ignore();
+        cout << "  Loai SP      : "; getline(cin, loaiSP);
         cout << "  Thuong hieu  : "; getline(cin, thuongHieu);
         cout << "  Nuoc san xuat: "; getline(cin, nuocSanXuat);
         cout << "  Ten NCC      : "; getline(cin, nhaCungCap.ten);
@@ -68,6 +72,7 @@ public:
         cout << "  Ten SP      : " << tenSanPham  << "\n";
         cout << "  Gia         : " << gia          << " VND\n";
         cout << "  So luong    : " << soLuong      << "\n";
+        cout << "  Loai SP     : " << loaiSP       << "\n";
         cout << "  Thuong hieu : " << thuongHieu   << "\n";
         cout << "  Nuoc SX     : " << nuocSanXuat  << "\n";
         cout << "  Nha CC      : " << nhaCungCap.ten << "\n";
@@ -82,8 +87,8 @@ public:
 class HangThucPham : public SanPham {
 private:
     string hanSuDung;
-    string loaiThucPham;    // tuoi song / dong lanh / kho
-    double nhietDoLuuTru;   // do C
+    string loaiThucPham;
+    double nhietDoLuuTru;
 
     friend void soSanhHanSD(const HangThucPham& a, const HangThucPham& b);
 
@@ -92,10 +97,10 @@ public:
     HangThucPham()
         : SanPham(), nhietDoLuuTru(0.0) {}
 
-    HangThucPham(string ten, int ma, double g, int sl,
+    HangThucPham(string ten, int ma, double g, int sl, string loaiSP,
                  string thuong, string nuoc, NhaCungCap ncc,
                  string hanSD, string loai, double nhiet)
-        : SanPham(ten, ma, g, sl, thuong, nuoc, ncc),
+        : SanPham(ten, ma, g, sl, loaiSP, thuong, nuoc, ncc),
           hanSuDung(hanSD), loaiThucPham(loai), nhietDoLuuTru(nhiet) {}
 
     // ---------- Getters ----------
@@ -132,8 +137,8 @@ public:
 // ===================== DERIVED CLASS: HANGDIENTU =====================
 class HangDienTu : public SanPham {
 private:
-    int    baoHanh;     // thang
-    double congSuat;    // Watt
+    int    baoHanh;
+    double congSuat;
     string phienBan;
     string mauSac;
 
@@ -144,10 +149,10 @@ public:
     HangDienTu()
         : SanPham(), baoHanh(0), congSuat(0.0) {}
 
-    HangDienTu(string ten, int ma, double g, int sl,
+    HangDienTu(string ten, int ma, double g, int sl, string loaiSP,
                string thuong, string nuoc, NhaCungCap ncc,
                int bh, double cs, string pv, string ms)
-        : SanPham(ten, ma, g, sl, thuong, nuoc, ncc),
+        : SanPham(ten, ma, g, sl, loaiSP, thuong, nuoc, ncc),
           baoHanh(bh), congSuat(cs), phienBan(pv), mauSac(ms) {}
 
     // ---------- Getters ----------
@@ -184,7 +189,6 @@ public:
 
 // ===================== FRIEND FUNCTIONS =====================
 void soSanhHanSD(const HangThucPham& a, const HangThucPham& b) {
-    // Truy cap private truc tiep nho friend
     cout << "\n[SO SANH HAN SD]\n";
     cout << "  " << a.tenSanPham << ": " << a.hanSuDung << "\n";
     cout << "  " << b.tenSanPham << ": " << b.hanSuDung << "\n";
