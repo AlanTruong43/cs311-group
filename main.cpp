@@ -2,27 +2,24 @@
 #include <string>
 using namespace std;
 
-// ===================== STRUCT =====================
 struct NhaCungCap {
     string ten;
     string diaChi;
     string soDienThoai;
 };
 
-// ===================== BASE CLASS: SANPHAM =====================
 class SanPham {
 protected:
-    string tenSanPham;
-    int    maSanPham;
-    double gia;
-    int    soLuong;
-    string loaiSP;
-    string thuongHieu;
-    string nuocSanXuat;
+    string     tenSanPham;
+    int        maSanPham;
+    double     gia;
+    int        soLuong;
+    string     loaiSP;
+    string     thuongHieu;
+    string     nuocSanXuat;
     NhaCungCap nhaCungCap;
 
 public:
-    // ---------- Constructors ----------
     SanPham()
         : maSanPham(0), gia(0.0), soLuong(0) {}
 
@@ -33,7 +30,6 @@ public:
 
     virtual ~SanPham() {}
 
-    // ---------- Getters ----------
     string     getTenSanPham()  const { return tenSanPham; }
     int        getMaSanPham()   const { return maSanPham; }
     double     getGia()         const { return gia; }
@@ -43,17 +39,15 @@ public:
     string     getNuocSanXuat() const { return nuocSanXuat; }
     NhaCungCap getNhaCungCap()  const { return nhaCungCap; }
 
-    // ---------- Setters ----------
-    void setTenSanPham(string ten)   { tenSanPham = ten; }
-    void setMaSanPham(int ma)        { maSanPham = ma; }
-    void setGia(double g)            { if (g >= 0) gia = g; }
-    void setSoLuong(int sl)          { if (sl >= 0) soLuong = sl; }
-    void setLoaiSP(string loai)      { loaiSP = loai; }
-    void setThuongHieu(string t)     { thuongHieu = t; }
-    void setNuocSanXuat(string n)    { nuocSanXuat = n; }
-    void setNhaCungCap(NhaCungCap n) { nhaCungCap = n; }
+    void setTenSanPham(string ten)    { tenSanPham = ten; }
+    void setMaSanPham(int ma)         { maSanPham = ma; }
+    void setGia(double g)             { if (g >= 0) gia = g; }
+    void setSoLuong(int sl)           { if (sl >= 0) soLuong = sl; }
+    void setLoaiSP(string loai)       { loaiSP = loai; }
+    void setThuongHieu(string t)      { thuongHieu = t; }
+    void setNuocSanXuat(string n)     { nuocSanXuat = n; }
+    void setNhaCungCap(NhaCungCap n)  { nhaCungCap = n; }
 
-    // ---------- Methods ----------
     virtual void nhapThongTin() {
         cin.ignore();
         cout << "  Ten san pham : "; getline(cin, tenSanPham);
@@ -68,22 +62,21 @@ public:
     }
 
     virtual void xuatThongTin() const {
-        cout << "  Ma SP       : " << maSanPham   << "\n";
-        cout << "  Ten SP      : " << tenSanPham  << "\n";
-        cout << "  Gia         : " << gia          << " VND\n";
-        cout << "  So luong    : " << soLuong      << "\n";
-        cout << "  Loai SP     : " << loaiSP       << "\n";
-        cout << "  Thuong hieu : " << thuongHieu   << "\n";
-        cout << "  Nuoc SX     : " << nuocSanXuat  << "\n";
-        cout << "  Nha CC      : " << nhaCungCap.ten << "\n";
+        cout << "  Ma SP       : " << maSanPham        << "\n";
+        cout << "  Ten SP      : " << tenSanPham        << "\n";
+        cout << "  Gia         : " << gia               << " VND\n";
+        cout << "  So luong    : " << soLuong           << "\n";
+        cout << "  Loai SP     : " << loaiSP            << "\n";
+        cout << "  Thuong hieu : " << thuongHieu        << "\n";
+        cout << "  Nuoc SX     : " << nuocSanXuat       << "\n";
+        cout << "  Nha CC      : " << nhaCungCap.ten    << "\n";
     }
 
-    void capNhatGia(double giaMoi)   { if (giaMoi >= 0) gia = giaMoi; }
-    void capNhatSoLuong(int slMoi)   { if (slMoi >= 0) soLuong = slMoi; }
-    double tinhTongTien() const      { return gia * soLuong; }
+    void   capNhatGia(double giaMoi)  { if (giaMoi >= 0) gia = giaMoi; }
+    void   capNhatSoLuong(int slMoi)  { if (slMoi >= 0) soLuong = slMoi; }
+    double tinhTongTien() const       { return gia * soLuong; }
 };
 
-// ===================== DERIVED CLASS: HANGTHUCPHAM =====================
 class HangThucPham : public SanPham {
 private:
     string hanSuDung;
@@ -93,7 +86,6 @@ private:
     friend void soSanhHanSD(const HangThucPham& a, const HangThucPham& b);
 
 public:
-    // ---------- Constructors ----------
     HangThucPham()
         : SanPham(), nhietDoLuuTru(0.0) {}
 
@@ -103,17 +95,14 @@ public:
         : SanPham(ten, ma, g, sl, loaiSP, thuong, nuoc, ncc),
           hanSuDung(hanSD), loaiThucPham(loai), nhietDoLuuTru(nhiet) {}
 
-    // ---------- Getters ----------
     string getHanSuDung()      const { return hanSuDung; }
     string getLoaiThucPham()   const { return loaiThucPham; }
     double getNhietDoLuuTru()  const { return nhietDoLuuTru; }
 
-    // ---------- Setters ----------
     void setHanSuDung(string h)     { hanSuDung = h; }
     void setLoaiThucPham(string l)  { loaiThucPham = l; }
     void setNhietDoLuuTru(double n) { nhietDoLuuTru = n; }
 
-    // ---------- Override Methods ----------
     void nhapThongTin() override {
         SanPham::nhapThongTin();
         cout << "  Han su dung (YYYY-MM-DD): "; getline(cin, hanSuDung);
@@ -124,9 +113,9 @@ public:
     void xuatThongTin() const override {
         cout << "--- [HANG THUC PHAM] ---\n";
         SanPham::xuatThongTin();
-        cout << "  Han su dung : " << hanSuDung      << "\n";
-        cout << "  Loai        : " << loaiThucPham    << "\n";
-        cout << "  Nhiet do    : " << nhietDoLuuTru   << " do C\n";
+        cout << "  Han su dung : " << hanSuDung     << "\n";
+        cout << "  Loai        : " << loaiThucPham   << "\n";
+        cout << "  Nhiet do    : " << nhietDoLuuTru  << " do C\n";
     }
 
     bool conHan(string ngayHienTai) const {
@@ -134,7 +123,6 @@ public:
     }
 };
 
-// ===================== DERIVED CLASS: HANGDIENTU =====================
 class HangDienTu : public SanPham {
 private:
     int    baoHanh;
@@ -145,7 +133,6 @@ private:
     friend void soSanhBaoHanh(const HangDienTu& a, const HangDienTu& b);
 
 public:
-    // ---------- Constructors ----------
     HangDienTu()
         : SanPham(), baoHanh(0), congSuat(0.0) {}
 
@@ -155,19 +142,16 @@ public:
         : SanPham(ten, ma, g, sl, loaiSP, thuong, nuoc, ncc),
           baoHanh(bh), congSuat(cs), phienBan(pv), mauSac(ms) {}
 
-    // ---------- Getters ----------
     int    getBaoHanh()  const { return baoHanh; }
     double getCongSuat() const { return congSuat; }
     string getPhienBan() const { return phienBan; }
     string getMauSac()   const { return mauSac; }
 
-    // ---------- Setters ----------
-    void setBaoHanh(int b)      { if (b >= 0) baoHanh = b; }
-    void setCongSuat(double c)  { if (c >= 0) congSuat = c; }
-    void setPhienBan(string p)  { phienBan = p; }
-    void setMauSac(string m)    { mauSac = m; }
+    void setBaoHanh(int b)     { if (b >= 0) baoHanh = b; }
+    void setCongSuat(double c) { if (c >= 0) congSuat = c; }
+    void setPhienBan(string p) { phienBan = p; }
+    void setMauSac(string m)   { mauSac = m; }
 
-    // ---------- Override Methods ----------
     void nhapThongTin() override {
         SanPham::nhapThongTin();
         cout << "  Bao hanh (thang): "; cin >> baoHanh;
@@ -187,7 +171,6 @@ public:
     }
 };
 
-// ===================== FRIEND FUNCTIONS =====================
 void soSanhHanSD(const HangThucPham& a, const HangThucPham& b) {
     cout << "\n[SO SANH HAN SD]\n";
     cout << "  " << a.tenSanPham << ": " << a.hanSuDung << "\n";
@@ -208,7 +191,6 @@ void soSanhBaoHanh(const HangDienTu& a, const HangDienTu& b) {
         cout << "  => '" << b.tenSanPham << "' bao hanh lau hon!\n";
 }
 
-// ===================== MAIN =====================
 int main() {
     const int MAX = 100;
     SanPham* danhSach[MAX];
